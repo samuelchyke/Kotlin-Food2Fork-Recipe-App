@@ -1,0 +1,2 @@
+rootProject.name = "KotlinFood2ForkRecipeApp"
+include ':app'
