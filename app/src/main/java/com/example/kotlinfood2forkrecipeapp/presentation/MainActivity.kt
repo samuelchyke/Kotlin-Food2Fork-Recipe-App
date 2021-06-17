@@ -6,16 +6,16 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.platform.AmbientContext
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.viewinterop.viewModel
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import androidx.navigation.compose.*
 import com.example.kotlinfood2forkrecipeapp.R
 import com.example.kotlinfood2forkrecipeapp.presentation.navigation.Screen
 import com.example.kotlinfood2forkrecipeapp.presentation.ui.recipe_list.RecipeListScreen
 import com.example.kotlinfood2forkrecipeapp.presentation.ui.recipe_list.RecipeListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.hilt.navigation.HiltViewModelFactory
+import androidx.navigation.NavType
+
+import androidx.navigation.navArgs
 import com.example.kotlinfood2forkrecipeapp.presentation.ui.recipe.RecipeDetailScreen
 import com.example.kotlinfood2forkrecipeapp.presentation.ui.recipe.RecipeViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -37,16 +37,21 @@ class MainActivity : AppCompatActivity(){
           RecipeListScreen(
             isDarkTheme = (application as BaseApplication).isDark.value,
             onToggleTheme = (application as BaseApplication)::toggleLightTheme,
+            onNavigateToRecipeScreen = navController::navigate,
             viewModel = viewModel,
           )
         }
 
-        composable(route = Screen.RecipeDetail.route) { navBackStackEntry ->
+        composable(route = Screen.RecipeDetail.route + "/{recipeId}",
+        arguments = listOf(navArgument("recipeId"){
+          type = NavType.IntType
+          }),
+        ) { navBackStackEntry ->
           val factory = HiltViewModelFactory(AmbientContext.current, navBackStackEntry)
           val viewModel: RecipeViewModel = viewModel("RecipeDetailViewModel", factory)
           RecipeDetailScreen(
             isDarkTheme = (application as BaseApplication).isDark.value,
-            recipeId = 1, // hard code for now
+            recipeId = navBackStackEntry.arguments?.getInt("recipeId"),
             viewModel = viewModel,
           )
         }

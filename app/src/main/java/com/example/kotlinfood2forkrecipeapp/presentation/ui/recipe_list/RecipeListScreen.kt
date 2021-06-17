@@ -12,13 +12,16 @@ import com.example.kotlinfood2forkrecipeapp.presentation.components.RecipeList
 import com.example.kotlinfood2forkrecipeapp.presentation.components.SearchAppBar
 import com.example.kotlinfood2forkrecipeapp.presentation.theme.AppTheme
 import com.example.kotlinfood2forkrecipeapp.util.TAG
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
+@ExperimentalCoroutinesApi
 @ExperimentalMaterialApi
 @Composable
 fun RecipeListScreen(
     isDarkTheme: Boolean,
     onToggleTheme: () -> Unit,
+    onNavigateToRecipeScreen: (String) -> Unit,
     viewModel: RecipeListViewModel
 ) {
     Log.d(TAG, "RecipeListScreen: $viewModel")
@@ -67,7 +70,7 @@ fun RecipeListScreen(
                 page = page,
                 onTriggerNextPage = { viewModel.onTriggerEvent(RecipeListEvent.NextPageEvent) },
                 onNavigateToRecipeDetailScreen = {
-                    // Nav to Detail Screen
+                    onNavigateToRecipeScreen
                 }
             )
         }
