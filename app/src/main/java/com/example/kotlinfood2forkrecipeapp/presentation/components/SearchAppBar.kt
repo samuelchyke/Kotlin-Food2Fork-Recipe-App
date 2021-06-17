@@ -16,7 +16,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.codingwithmitch.food2forkcompose.presentation.ui.recipe_list.FoodCategory
+import com.example.kotlinfood2forkrecipeapp.presentation.ui.recipe_list.FoodCategory
 
 @Composable
 fun SearchAppBar(

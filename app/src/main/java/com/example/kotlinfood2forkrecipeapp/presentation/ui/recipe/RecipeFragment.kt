@@ -15,11 +15,11 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.codingwithmitch.food2forkcompose.presentation.BaseApplication
-import com.codingwithmitch.food2forkcompose.presentation.components.LoadingRecipeShimmer
-import com.codingwithmitch.food2forkcompose.presentation.components.RecipeView
-import com.codingwithmitch.food2forkcompose.presentation.components.util.SnackbarController
-import com.codingwithmitch.food2forkcompose.presentation.theme.AppTheme
+import com.example.kotlinfood2forkrecipeapp.presentation.BaseApplication
+import com.example.kotlinfood2forkrecipeapp.presentation.components.LoadingRecipeShimmer
+import com.example.kotlinfood2forkrecipeapp.presentation.components.RecipeView
+import com.example.kotlinfood2forkrecipeapp.presentation.components.util.SnackbarController
+import com.example.kotlinfood2forkrecipeapp.presentation.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch

@@ -1,6 +1,6 @@
 package com.example.kotlinfood2forkrecipeapp.repository
 
-import com.codingwithmitch.food2forkcompose.domain.model.Recipe
+import com.example.kotlinfood2forkrecipeapp.domain.model.Recipe
 
 
 interface RecipeRepository {

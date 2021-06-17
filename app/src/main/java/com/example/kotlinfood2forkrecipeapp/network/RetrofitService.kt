@@ -1,7 +1,7 @@
 package com.example.kotlinfood2forkrecipeapp.network
 
-import com.codingwithmitch.food2forkcompose.network.model.RecipeDto
-import com.codingwithmitch.food2forkcompose.network.response.RecipeSearchResponse
+import com.example.kotlinfood2forkrecipeapp.network.model.RecipeDto
+import com.example.kotlinfood2forkrecipeapp.network.response.RecipeSearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query

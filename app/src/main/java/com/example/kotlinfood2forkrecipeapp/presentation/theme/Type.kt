@@ -7,8 +7,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.codingwithmitch.food2forkcompose.R
-
+import com.example.kotlinfood2forkrecipeapp.R
 
 private val QuickSand = FontFamily(
         Font(R.font.quicksand_light, FontWeight.W300),

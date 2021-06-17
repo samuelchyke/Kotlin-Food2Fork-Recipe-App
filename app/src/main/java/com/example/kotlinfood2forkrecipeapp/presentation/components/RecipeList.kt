@@ -9,8 +9,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.codingwithmitch.food2forkcompose.domain.model.Recipe
-import com.codingwithmitch.food2forkcompose.presentation.ui.recipe_list.PAGE_SIZE
+import com.example.kotlinfood2forkrecipeapp.domain.model.Recipe
+import com.example.kotlinfood2forkrecipeapp.presentation.ui.recipe_list.PAGE_SIZE
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalMaterialApi

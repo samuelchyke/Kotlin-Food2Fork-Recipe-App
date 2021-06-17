@@ -11,9 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.codingwithmitch.food2forkcompose.domain.model.Recipe
-import com.codingwithmitch.food2forkcompose.util.DEFAULT_RECIPE_IMAGE
-import com.codingwithmitch.food2forkcompose.util.loadPicture
+import com.example.kotlinfood2forkrecipeapp.domain.model.Recipe
+import com.example.kotlinfood2forkrecipeapp.util.DEFAULT_RECIPE_IMAGE
+import com.example.kotlinfood2forkrecipeapp.util.loadPicture
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi

@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/recipeListFragment"
-        android:name="com.codingwithmitch.food2forkcompose.presentation.ui.recipe_list.RecipeListFragment"
+        android:name="com.example.kotlinfood2forkrecipeapp.presentation.ui.recipe_list.RecipeListFragment"
         android:label="RecipeListFragment">
         <action
             android:id="@+id/viewRecipe"
@@ -15,7 +15,12 @@
 
     <fragment
         android:id="@+id/recipeFragment"
-        android:name="com.codingwithmitch.food2forkcompose.presentation.ui.recipe.RecipeFragment"
+        android:name="com.example.kotlinfood2forkrecipeapp.presentation.ui.recipe.RecipeFragment"
         android:label="RecipeFragment">
     </fragment>
+
+
+
+
+
 </navigation>

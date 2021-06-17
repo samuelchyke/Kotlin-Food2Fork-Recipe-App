@@ -1,7 +1,7 @@
 package com.example.kotlinfood2forkrecipeapp.network.model
 
-import com.codingwithmitch.food2forkcompose.domain.model.Recipe
-import com.codingwithmitch.food2forkcompose.domain.util.DomainMapper
+import com.example.kotlinfood2forkrecipeapp.domain.model.Recipe
+import com.example.kotlinfood2forkrecipeapp.domain.util.DomainMapper
 
 
 class RecipeDtoMapper : DomainMapper<RecipeDto, Recipe> {
