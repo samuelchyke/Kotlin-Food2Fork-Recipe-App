@@ -1,19 +1,15 @@
 package com.example.kotlinfood2forkrecipeapp.presentation.ui.recipe_list
 
-import android.os.Bundle
 import android.util.Log
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.navigation.findNavController
-import com.example.kotlinfood2forkrecipeapp.R
 import com.example.kotlinfood2forkrecipeapp.presentation.components.RecipeList
 import com.example.kotlinfood2forkrecipeapp.presentation.components.SearchAppBar
 import com.example.kotlinfood2forkrecipeapp.presentation.theme.AppTheme
 import com.example.kotlinfood2forkrecipeapp.util.TAG
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @ExperimentalMaterialApi
@@ -21,8 +17,8 @@ import kotlinx.coroutines.launch
 fun RecipeListScreen(
     isDarkTheme: Boolean,
     onToggleTheme: () -> Unit,
-    onNavigateToRecipeScreen: (String) -> Unit,
-    viewModel: RecipeListViewModel
+    onNavigateToRecipeDetailScreen: (String) -> Unit,
+    viewModel: RecipeListViewModel,
 ) {
     Log.d(TAG, "RecipeListScreen: $viewModel")
     
@@ -69,9 +65,7 @@ fun RecipeListScreen(
                 onChangeScrollPosition = viewModel::onChangeRecipeScrollPosition,
                 page = page,
                 onTriggerNextPage = { viewModel.onTriggerEvent(RecipeListEvent.NextPageEvent) },
-                onNavigateToRecipeDetailScreen = {
-                    onNavigateToRecipeScreen
-                }
+                onNavigateToRecipeDetailScreen = onNavigateToRecipeDetailScreen
             )
         }
     }
