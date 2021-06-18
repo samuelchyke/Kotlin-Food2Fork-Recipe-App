@@ -2,6 +2,7 @@ package com.example.kotlinfood2forkrecipeapp.network.model
 
 import com.example.kotlinfood2forkrecipeapp.domain.model.Recipe
 import com.example.kotlinfood2forkrecipeapp.domain.util.DomainMapper
+import com.example.kotlinfood2forkrecipeapp.util.DateUtils
 
 
 class RecipeDtoMapper : DomainMapper<RecipeDto, Recipe> {
@@ -15,8 +16,8 @@ class RecipeDtoMapper : DomainMapper<RecipeDto, Recipe> {
             publisher = model.publisher,
             sourceUrl = model.sourceUrl,
             ingredients = model.ingredients,
-            dateAdded = model.dateAdded,
-            dateUpdated = model.dateUpdated,
+            dateAdded = DateUtils.longToDate(model.longDateAdded),
+            dateUpdated = DateUtils.longToDate(model.longDateUpdated),
         )
     }
 
@@ -29,8 +30,8 @@ class RecipeDtoMapper : DomainMapper<RecipeDto, Recipe> {
             publisher = domainModel.publisher,
             sourceUrl = domainModel.sourceUrl,
             ingredients = domainModel.ingredients,
-            dateAdded = domainModel.dateAdded,
-            dateUpdated = domainModel.dateUpdated,
+            longDateAdded = DateUtils.dateToLong(domainModel.dateAdded),
+            longDateUpdated = DateUtils.dateToLong(domainModel.dateUpdated),
         )
     }
 
