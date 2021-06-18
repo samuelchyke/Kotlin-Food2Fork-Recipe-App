@@ -20,7 +20,7 @@ const val STATE_KEY_RECIPE = "recipe.state.recipe.key"
 
 @ExperimentalCoroutinesApi
 @HiltViewModel
-class RecipeViewModel
+class RecipeDetailViewModel
 @Inject
 constructor(
     private val recipeRepository: RecipeRepository,
@@ -31,6 +31,8 @@ constructor(
     val recipe: MutableState<Recipe?> = mutableStateOf(null)
 
     val loading = mutableStateOf(false)
+
+    val onLoad: MutableState<Boolean> = mutableStateOf(false)
 
     init {
         // restore if process dies

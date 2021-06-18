@@ -12,7 +12,7 @@ import androidx.navigation.compose.*
 
 import com.example.kotlinfood2forkrecipeapp.presentation.navigation.Screen
 import com.example.kotlinfood2forkrecipeapp.presentation.ui.recipe.RecipeDetailScreen
-import com.example.kotlinfood2forkrecipeapp.presentation.ui.recipe.RecipeViewModel
+import com.example.kotlinfood2forkrecipeapp.presentation.ui.recipe.RecipeDetailViewModel
 import com.example.kotlinfood2forkrecipeapp.presentation.ui.recipe_list.RecipeListScreen
 import com.example.kotlinfood2forkrecipeapp.presentation.ui.recipe_list.RecipeListViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,11 +46,11 @@ class MainActivity : AppCompatActivity(){
           })
         ) { navBackStackEntry ->
           val factory = HiltViewModelFactory(AmbientContext.current, navBackStackEntry)
-          val viewModel: RecipeViewModel = viewModel("RecipeDetailViewModel", factory)
+          val detailViewModel: RecipeDetailViewModel = viewModel("RecipeDetailViewModel", factory)
           RecipeDetailScreen(
             isDarkTheme = (application as BaseApplication).isDark.value,
             recipeId = navBackStackEntry.arguments?.getInt("recipeId"),
-            viewModel = viewModel,
+            viewModel = detailViewModel,
           )
         }
       }
