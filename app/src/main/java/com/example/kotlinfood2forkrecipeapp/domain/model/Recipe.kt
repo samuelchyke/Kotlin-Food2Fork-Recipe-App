@@ -1,5 +1,7 @@
 package com.example.kotlinfood2forkrecipeapp.domain.model
 
+import java.util.*
+
 /**
  * See Recipe example: https://food2fork.ca/
  */
@@ -11,6 +13,6 @@ data class Recipe (
     val rating: Int = 0,
     val sourceUrl: String,
     val ingredients: List<String> = listOf(),
-    val dateAdded: String,
-    val dateUpdated: String,
+    val dateAdded: Date,
+    val dateUpdated: Date,
 )
