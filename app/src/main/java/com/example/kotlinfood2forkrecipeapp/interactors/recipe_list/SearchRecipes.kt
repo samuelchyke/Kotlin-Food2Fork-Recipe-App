@@ -10,7 +10,7 @@ import com.example.kotlinfood2forkrecipeapp.util.RECIPE_PAGINATION_PAGE_SIZE
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 
-class SearchRecipe(
+class SearchRecipes(
     private val recipeDao: RecipeDao,
     private val recipeService: RecipeService,
     private val entityMapper: RecipeEntityMapper,

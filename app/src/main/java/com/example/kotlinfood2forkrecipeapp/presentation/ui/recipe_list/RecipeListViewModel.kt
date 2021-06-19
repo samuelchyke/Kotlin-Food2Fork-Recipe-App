@@ -7,10 +7,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kotlinfood2forkrecipeapp.domain.model.Recipe
+import com.example.kotlinfood2forkrecipeapp.interactors.recipe_list.SearchRecipes
 import com.example.kotlinfood2forkrecipeapp.repository.RecipeRepository
 import com.example.kotlinfood2forkrecipeapp.util.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
@@ -26,6 +28,7 @@ const val STATE_KEY_SELECTED_CATEGORY = "recipe.state.query.selected_category"
 class RecipeListViewModel
 @Inject
 constructor(
+    private val searchRecipes: SearchRecipes,
     private val repository: RecipeRepository,
     private @Named("auth_token") val token: String,
     private val savedStateHandle: SavedStateHandle,
@@ -109,39 +112,46 @@ constructor(
         }
     }
 
-    private suspend fun newSearch() {
-        loading.value = true
-
+    private fun newSearch() {
+        Log.d(TAG, "newSearch: query: ${query.value}, page: ${page.value}")
+        // New search. Reset the state
         resetSearchState()
 
-        delay(2000)
+        searchRecipes.execute(token = token, page = page.value, query = query.value).onEach { dataState ->
+            loading.value = dataState.loading
 
-        val result = repository.search(
-            token = token,
-            page = 1,
-            query = query.value
-        )
-        recipes.value = result
+            dataState.data?.let { list ->
+                recipes.value = list
+            }
 
-        loading.value = false
+            dataState.error?.let { error ->
+                Log.e(TAG, "newSearch: ${error}")
+                // TODO("Handle error")
+            }
+        }.launchIn(viewModelScope)
     }
 
-    private suspend fun nextPage(){
+    private fun nextPage(){
         // prevent duplicate event due to recompose happening to quickly
         if((recipeListScrollPosition + 1) >= (page.value * PAGE_SIZE) ){
-            loading.value = true
+
             incrementPage()
             Log.d(TAG, "nextPage: triggered: ${page.value}")
 
-            // just to show pagination, api is fast
-            delay(1000)
-
             if(page.value > 1){
-                val result = repository.search(token = token, page = page.value, query = query.value )
-                Log.d(TAG, "search: appending")
-                appendRecipes(result)
+                searchRecipes.execute(token = token, page = page.value, query = query.value).onEach { dataState ->
+                    loading.value = dataState.loading
+
+                    dataState.data?.let { list ->
+                        appendRecipes(list)
+                    }
+
+                    dataState.error?.let { error ->
+                        Log.e(TAG, "nextPage: $error")
+                        // TODO("Handle error")
+                    }
+                }.launchIn(viewModelScope)
             }
-            loading.value = false
         }
     }
 
