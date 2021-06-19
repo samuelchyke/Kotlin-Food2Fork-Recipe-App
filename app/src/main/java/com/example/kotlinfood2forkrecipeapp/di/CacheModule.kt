@@ -3,6 +3,7 @@ package com.example.kotlinfood2forkrecipeapp.di
 import androidx.room.Room
 import com.example.kotlinfood2forkrecipeapp.cache.RecipeDao
 import com.example.kotlinfood2forkrecipeapp.cache.database.AppDatabase
+import com.example.kotlinfood2forkrecipeapp.cache.model.RecipeEntityMapper
 import com.example.kotlinfood2forkrecipeapp.presentation.BaseApplication
 import dagger.Module
 import dagger.Provides
@@ -27,6 +28,12 @@ object CacheModule {
     @Provides
     fun provideRecipeDao(db: AppDatabase): RecipeDao {
         return db.recipeDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideCacheRecipeMapper(): RecipeEntityMapper {
+        return RecipeEntityMapper()
     }
 
 }
