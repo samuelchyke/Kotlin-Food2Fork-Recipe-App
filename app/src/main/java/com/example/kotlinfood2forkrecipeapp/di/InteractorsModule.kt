@@ -2,6 +2,7 @@ package com.example.kotlinfood2forkrecipeapp.di
 
 import com.example.kotlinfood2forkrecipeapp.cache.RecipeDao
 import com.example.kotlinfood2forkrecipeapp.cache.model.RecipeEntityMapper
+import com.example.kotlinfood2forkrecipeapp.interactors.recipe.GetRecipe
 import com.example.kotlinfood2forkrecipeapp.interactors.recipe_list.RestoreRecipes
 import com.example.kotlinfood2forkrecipeapp.interactors.recipe_list.SearchRecipes
 import com.example.kotlinfood2forkrecipeapp.network.RecipeService
@@ -43,4 +44,20 @@ object InteractorsModule{
             entityMapper = recipeEntityMapper,
         )
     }
+    @ViewModelScoped
+    @Provides
+    fun provideGetRecipe(
+        recipeDao: RecipeDao,
+        recipeEntityMapper: RecipeEntityMapper,
+        recipeService: RecipeService,
+        recipeDtoMapper: RecipeDtoMapper,
+    ): GetRecipe {
+        return GetRecipe(
+            recipeDao = recipeDao,
+            entityMapper = recipeEntityMapper,
+            recipeService = recipeService,
+            recipeDtoMapper = recipeDtoMapper,
+        )
+    }
+
 }

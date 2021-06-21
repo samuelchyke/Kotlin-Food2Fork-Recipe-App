@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.kotlinfood2forkrecipeapp.domain.model.Recipe
 import com.example.kotlinfood2forkrecipeapp.interactors.recipe_list.RestoreRecipes
 import com.example.kotlinfood2forkrecipeapp.interactors.recipe_list.SearchRecipes
-import com.example.kotlinfood2forkrecipeapp.repository.RecipeRepository
 import com.example.kotlinfood2forkrecipeapp.util.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
