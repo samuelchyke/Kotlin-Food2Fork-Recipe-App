@@ -1,6 +1,7 @@
 package com.example.kotlinfood2forkrecipeapp.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.platform.AmbientContext
@@ -15,6 +16,7 @@ import com.example.kotlinfood2forkrecipeapp.presentation.ui.recipe.RecipeDetailV
 import com.example.kotlinfood2forkrecipeapp.presentation.ui.recipe_list.RecipeListScreen
 import com.example.kotlinfood2forkrecipeapp.presentation.ui.recipe_list.RecipeListViewModel
 import com.example.kotlinfood2forkrecipeapp.presentation.util.ConnectivityManager
+import com.example.kotlinfood2forkrecipeapp.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -38,6 +40,10 @@ class MainActivity : AppCompatActivity(){
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+
+    val isInternetAvailable = connectivityManager.isNetworkAvailable.value
+    Log.d(TAG, "onCreate: IS INTERNET AVAILABLE? ${isInternetAvailable}")
+
     setContent {
       val navController = rememberNavController()
       NavHost(navController = navController, startDestination = Screen.RecipeList.route) {
@@ -47,6 +53,7 @@ class MainActivity : AppCompatActivity(){
           RecipeListScreen(
             isDarkTheme = (application as BaseApplication).isDark.value,
             onToggleTheme = (application as BaseApplication)::toggleLightTheme,
+            isNetworkAvailable = connectivityManager.isNetworkAvailable.value,
             onNavigateToRecipeDetailScreen = navController::navigate,
             viewModel = viewModel,
           )
@@ -63,6 +70,7 @@ class MainActivity : AppCompatActivity(){
           RecipeDetailScreen(
             isDarkTheme = (application as BaseApplication).isDark.value,
             recipeId = navBackStackEntry.arguments?.getInt("recipeId"),
+            isNetworkAvailable = connectivityManager.isNetworkAvailable.value,
             viewModel = detailViewModel,
           )
         }
