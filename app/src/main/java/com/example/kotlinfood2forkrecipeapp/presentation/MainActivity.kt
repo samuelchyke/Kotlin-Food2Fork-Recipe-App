@@ -1,6 +1,8 @@
 package com.example.kotlinfood2forkrecipeapp.presentation
 
+import android.net.*
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.platform.AmbientContext
@@ -22,6 +24,41 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalMaterialApi
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(){
+
+
+  val TAG = "c-manager"
+
+  lateinit var cm: ConnectivityManager
+
+  val networkRequest = NetworkRequest.Builder()
+    .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+    .build()
+
+  val networkCallback = object: ConnectivityManager.NetworkCallback() {
+
+    // Called when the framework connects and has declared a new network ready for use.
+    override fun onAvailable(network: Network) {
+      super.onAvailable(network)
+      Log.d(TAG, "onAvailable: $network")
+    }
+
+    // Called when a network disconnects or otherwise no longer satisfies this request or callback
+    override fun onLost(network: Network) {
+      super.onLost(network)
+      Log.d(TAG, "onLost: $network")
+    }
+  }
+
+  override fun onStart() {
+    super.onStart()
+    cm = this.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+    cm.registerNetworkCallback(networkRequest, networkCallback)
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    cm.unregisterNetworkCallback(networkCallback)
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
