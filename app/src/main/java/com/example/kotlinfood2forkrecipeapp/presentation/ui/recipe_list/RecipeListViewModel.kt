@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.kotlinfood2forkrecipeapp.domain.model.Recipe
 import com.example.kotlinfood2forkrecipeapp.interactors.recipe_list.RestoreRecipes
 import com.example.kotlinfood2forkrecipeapp.interactors.recipe_list.SearchRecipes
+import com.example.kotlinfood2forkrecipeapp.presentation.ui.util.DialogQueue
 import com.example.kotlinfood2forkrecipeapp.util.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -42,6 +43,8 @@ constructor(
     val selectedCategory: MutableState<FoodCategory?> = mutableStateOf(null)
 
     val loading = mutableStateOf(false)
+
+    val dialogQueue = DialogQueue()
 
     // Pagination starts at '1' (-1 = exhausted)
     val page = mutableStateOf(1)
@@ -105,7 +108,7 @@ constructor(
 
             dataState.error?.let { error ->
                 Log.e(TAG, "restoreState: ${error}")
-                // TODO("Handle error")
+                dialogQueue.appendErrorMessage("Error", error)
             }
         }.launchIn(viewModelScope)
     }
@@ -124,7 +127,7 @@ constructor(
 
             dataState.error?.let { error ->
                 Log.e(TAG, "newSearch: ${error}")
-                // TODO("Handle error")
+                dialogQueue.appendErrorMessage("Error", error)
             }
         }.launchIn(viewModelScope)
     }
@@ -146,7 +149,7 @@ constructor(
 
                     dataState.error?.let { error ->
                         Log.e(TAG, "nextPage: $error")
-                        // TODO("Handle error")
+                        dialogQueue.appendErrorMessage("Error", error)
                     }
                 }.launchIn(viewModelScope)
             }

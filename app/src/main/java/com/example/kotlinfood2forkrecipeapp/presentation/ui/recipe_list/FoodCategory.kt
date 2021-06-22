@@ -4,6 +4,7 @@ import com.example.kotlinfood2forkrecipeapp.presentation.ui.recipe_list.FoodCate
 
 
 enum class FoodCategory(val value: String){
+    ERROR("Error"),
     CHICKEN("Chicken"),
     BEEF("Beef"),
     SOUP("Soup"),
@@ -17,6 +18,7 @@ enum class FoodCategory(val value: String){
 
 fun getAllFoodCategories(): List<FoodCategory>{
     return listOf(
+        ERROR,
         CHICKEN,
         BEEF, SOUP, DESSERT, VEGETARIAN, MILK, VEGAN, PIZZA, DONUT)
 }

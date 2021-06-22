@@ -30,7 +30,7 @@ class SearchRecipes(
             delay(1000)
 
             // force error for testing
-            if (query == "error") {
+            if (query == "Error") {
                 throw Exception("Search FAILED!")
             }
 

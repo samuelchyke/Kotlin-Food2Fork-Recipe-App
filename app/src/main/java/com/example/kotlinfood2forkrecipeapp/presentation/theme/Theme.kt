@@ -10,6 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.example.kotlinfood2forkrecipeapp.presentation.components.CircularIndeterminateProgressBar
 import com.example.kotlinfood2forkrecipeapp.presentation.components.DefaultSnackbar
+import com.example.kotlinfood2forkrecipeapp.presentation.components.GenericDialog
+import com.example.kotlinfood2forkrecipeapp.presentation.components.GenericDialogInfo
+import com.example.kotlinfood2forkrecipeapp.presentation.ui.util.DialogQueue
+import java.util.*
 
 private val LightThemeColors = lightColors(
   primary = Blue600,
@@ -45,6 +49,7 @@ fun AppTheme(
   darkTheme: Boolean,
   displayProgressBar: Boolean,
   scaffoldState: ScaffoldState,
+  dialogQueue: Queue<GenericDialogInfo>? = null,
   content: @Composable () -> Unit,
 ) {
   MaterialTheme(
@@ -66,9 +71,26 @@ fun AppTheme(
         },
         modifier = Modifier.align(Alignment.BottomCenter)
       )
+      ProcessDialogQueue(dialogQueue)
     }
   }
 }
+
+@Composable
+fun ProcessDialogQueue(
+  dialogQueue: Queue<GenericDialogInfo>?,
+) {
+  dialogQueue?.peek()?.let { dialogInfo ->
+    GenericDialog(
+      onDismiss = dialogInfo.onDismiss,
+      title = dialogInfo.title,
+      description = dialogInfo.description,
+      positiveAction = dialogInfo.positiveAction,
+      negativeAction = dialogInfo.negativeAction
+    )
+  }
+}
+
 
 
 
