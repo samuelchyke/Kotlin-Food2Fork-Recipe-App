@@ -10,6 +10,7 @@ import com.example.kotlinfood2forkrecipeapp.domain.model.Recipe
 import com.example.kotlinfood2forkrecipeapp.interactors.recipe_list.RestoreRecipes
 import com.example.kotlinfood2forkrecipeapp.interactors.recipe_list.SearchRecipes
 import com.example.kotlinfood2forkrecipeapp.presentation.ui.util.DialogQueue
+import com.example.kotlinfood2forkrecipeapp.presentation.util.ConnectivityManager
 import com.example.kotlinfood2forkrecipeapp.util.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -33,6 +34,7 @@ constructor(
     private val restoreRecipes: RestoreRecipes,
     private @Named("auth_token") val token: String,
     private val savedStateHandle: SavedStateHandle,
+    private val connectivityManager: ConnectivityManager
 ) : ViewModel() {
 
 
@@ -107,7 +109,7 @@ constructor(
             }
 
             dataState.error?.let { error ->
-                Log.e(TAG, "restoreState: ${error}")
+                Log.e(TAG, "restoreState: $error")
                 dialogQueue.appendErrorMessage("Error", error)
             }
         }.launchIn(viewModelScope)
@@ -118,7 +120,7 @@ constructor(
         // New search. Reset the state
         resetSearchState()
 
-        searchRecipes.execute(token = token, page = page.value, query = query.value).onEach { dataState ->
+        searchRecipes.execute(token = token, page = page.value, query = query.value, isNetworkAvailable = connectivityManager.isNetworkAvailable.value).onEach { dataState ->
             loading.value = dataState.loading
 
             dataState.data?.let { list ->
@@ -126,7 +128,7 @@ constructor(
             }
 
             dataState.error?.let { error ->
-                Log.e(TAG, "newSearch: ${error}")
+                Log.e(TAG, "newSearch: $error")
                 dialogQueue.appendErrorMessage("Error", error)
             }
         }.launchIn(viewModelScope)
@@ -140,7 +142,7 @@ constructor(
             Log.d(TAG, "nextPage: triggered: ${page.value}")
 
             if(page.value > 1){
-                searchRecipes.execute(token = token, page = page.value, query = query.value).onEach { dataState ->
+                searchRecipes.execute(token = token, page = page.value, query = query.value, isNetworkAvailable = connectivityManager.isNetworkAvailable.value).onEach { dataState ->
                     loading.value = dataState.loading
 
                     dataState.data?.let { list ->

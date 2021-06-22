@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.kotlinfood2forkrecipeapp.domain.model.Recipe
 import com.example.kotlinfood2forkrecipeapp.interactors.recipe.GetRecipe
 import com.example.kotlinfood2forkrecipeapp.presentation.ui.util.DialogQueue
+import com.example.kotlinfood2forkrecipeapp.presentation.util.ConnectivityManager
 import com.example.kotlinfood2forkrecipeapp.util.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -29,6 +30,7 @@ constructor(
     private val getRecipe: GetRecipe,
     private @Named("auth_token") val token: String,
     private val state: SavedStateHandle,
+    private val connectivityManager: ConnectivityManager,
 ): ViewModel(){
 
     val recipe: MutableState<Recipe?> = mutableStateOf(null)
@@ -64,7 +66,7 @@ constructor(
     }
 
     private fun getRecipe(id: Int){
-        getRecipe.execute(id, token).onEach { dataState ->
+        getRecipe.execute(id, token, connectivityManager.isNetworkAvailable.value).onEach { dataState ->
             loading.value = dataState.loading
 
             dataState.data?.let { data ->
