@@ -10,6 +10,7 @@ import androidx.compose.ui.viewinterop.viewModel
 import androidx.hilt.navigation.HiltViewModelFactory
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
+import com.example.kotlinfood2forkrecipeapp.datastore.SettingsDataStore
 import com.example.kotlinfood2forkrecipeapp.presentation.navigation.Screen
 import com.example.kotlinfood2forkrecipeapp.presentation.ui.recipe.RecipeDetailScreen
 import com.example.kotlinfood2forkrecipeapp.presentation.ui.recipe.RecipeDetailViewModel
@@ -28,6 +29,10 @@ class MainActivity : AppCompatActivity(){
 
   @Inject
   lateinit var connectivityManager: ConnectivityManager
+
+  @Inject
+  lateinit var settingsDataStore: SettingsDataStore
+
   override fun onStart() {
     super.onStart()
     connectivityManager.registerConnectionObserver(this)
@@ -40,10 +45,6 @@ class MainActivity : AppCompatActivity(){
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-
-    val isInternetAvailable = connectivityManager.isNetworkAvailable.value
-    Log.d(TAG, "onCreate: IS INTERNET AVAILABLE? ${isInternetAvailable}")
-
     setContent {
       val navController = rememberNavController()
       NavHost(navController = navController, startDestination = Screen.RecipeList.route) {
@@ -51,8 +52,8 @@ class MainActivity : AppCompatActivity(){
           val factory = HiltViewModelFactory(AmbientContext.current, navBackStackEntry)
           val viewModel: RecipeListViewModel = viewModel("RecipeListViewModel", factory)
           RecipeListScreen(
-            isDarkTheme = (application as BaseApplication).isDark.value,
-            onToggleTheme = (application as BaseApplication)::toggleLightTheme,
+            isDarkTheme = settingsDataStore.isDark.value,
+            onToggleTheme = settingsDataStore::toggleTheme,
             isNetworkAvailable = connectivityManager.isNetworkAvailable.value,
             onNavigateToRecipeDetailScreen = navController::navigate,
             viewModel = viewModel,
@@ -68,7 +69,7 @@ class MainActivity : AppCompatActivity(){
           val factory = HiltViewModelFactory(AmbientContext.current, navBackStackEntry)
           val detailViewModel: RecipeDetailViewModel = viewModel("RecipeDetailViewModel", factory)
           RecipeDetailScreen(
-            isDarkTheme = (application as BaseApplication).isDark.value,
+            isDarkTheme = settingsDataStore.isDark.value,
             recipeId = navBackStackEntry.arguments?.getInt("recipeId"),
             isNetworkAvailable = connectivityManager.isNetworkAvailable.value,
             viewModel = detailViewModel,
